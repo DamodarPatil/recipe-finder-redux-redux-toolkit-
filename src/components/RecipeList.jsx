@@ -2,14 +2,18 @@ import { useSelector } from "react-redux";
 import RecipeCard from "./RecipeCard";
 
 const RecipeList = () => {
-  const { recipes, status } = useSelector((state) => state.recipes);
+  const { recipes, status, error } = useSelector((state) => state.recipes);
 
-  if (status == "loading") {
-    return <div>Loading....</div>;
+  if (status === "loading") {
+    return <p>Loading...</p>; 
   }
 
-  if (status == "failed") {
-    return <div>Failed to load recipes.</div>;
+  if (status === "failed") {
+    return <p>Error: {error}</p>; 
+  }
+
+  if (status === "succeeded" && recipes.length === 0) {
+    return <p>This item is not available.</p>; // Show no results state
   }
 
   return (
