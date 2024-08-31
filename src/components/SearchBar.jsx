@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchRecipes } from "../features/recipesSlice";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.recipes);
 
   const handleSearch = () => {
     if (query) {
-      dispatch(fetchRecipes);
+      dispatch(fetchRecipes(query));
     }
   };
 
@@ -27,6 +28,7 @@ const SearchBar = () => {
       >
         Search
       </button>
+      {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
   );
 };
